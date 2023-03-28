@@ -1,16 +1,15 @@
 use flowsnet_platform_sdk::write_error_log;
 use github_flows::{
-    get_octo, listen_to_event,
-    octocrab::models::events::payload::WorkflowRunEventAction,
+    get_octo, listen_to_event, octocrab::models::events::payload::WorkflowRunEventAction,
     EventPayload,
 };
 
 #[no_mangle]
 #[tokio::main(flavor = "current_thread")]
 pub async fn run() {
-    let login = "jaykchen";
-    let owner = "jaykchen";
-    let repo = "a-test";
+    let login = "jetjinser";
+    let owner = "jetjinser";
+    let repo = "jetjinser.github.io";
 
     listen_to_event(&login, &owner, &repo, vec!["workflow_run"], |payload| {
         handler(&login, &owner, &repo, payload)
@@ -40,10 +39,14 @@ async fn handler(login: &str, owner: &str, repo: &str, payload: EventPayload) {
                         }
                     };
                 } else {
+                    write_error_log!("have not completed");
                     return;
                 }
             }
         }
-        _ => return,
+        _ => {
+            write_error_log!("have not completed");
+            return;
+        }
     };
 }
