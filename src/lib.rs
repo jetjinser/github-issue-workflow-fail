@@ -39,14 +39,10 @@ async fn handler(login: &str, owner: &str, repo: &str, payload: EventPayload) {
                         }
                     };
                 } else {
-                    write_error_log!("have not completed");
                     return;
                 }
             }
         }
-        _ => {
-            write_error_log!("have not completed");
-            return;
-        }
+        _ => (),
     };
 }
